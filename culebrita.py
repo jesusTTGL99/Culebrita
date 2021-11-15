@@ -47,6 +47,8 @@ comida.penup()
 comida.goto(100,100)
 comida.speed(0)
 
+cuerpo = []
+
 s.listen()
 s.onkeypress(arriba, "Up")
 s.onkeypress(abajo, "Down")
@@ -59,7 +61,27 @@ while True :
         x = random.randint(-250, 250)
         y = random.randint(-250, 250)
         comida.goto(x, y)
+        
+        nuevo_cuerpo = turtle.Turtle()
+        nuevo_cuerpo.shape("square")
+        nuevo_cuerpo.color("red")
+        nuevo_cuerpo.penup()
+        nuevo_cuerpo.goto(0, 0)
+        nuevo_cuerpo.speed(0)
+        cuerpo.append(nuevo_cuerpo)
+    
+    total = len(cuerpo)    
+    for i in range(total-1, 0, -1) :
+        x = cuerpo[i-1].xcor()
+        y = cuerpo[i-1].ycor()
+        cuerpo[i].goto(x, y)
+        
+    if total > 0 :
+        x = serpiente.xcor()
+        y = serpiente.ycor()
+        cuerpo[0].goto(x, y)
+    
     movimiento()
-    time.sleep(0.2)
+    time.sleep(0.1)
 
 turtle.done()
