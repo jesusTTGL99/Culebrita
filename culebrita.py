@@ -28,6 +28,16 @@ def movimiento() :
         x = serpiente.xcor()
         serpiente.setx(x - 20)
 
+marcador = 0
+marcador_alto = 0
+texto = turtle.Turtle()
+texto.speed(0)
+texto.color("white")
+texto.penup()
+texto.hideturtle()
+texto.goto(0, 240)
+texto.write("marcador: 0\tMarcador mas alto: 0", align="center", font=("verdana", 14, "normal"))
+
 s = turtle.Screen()
 s.setup(650,650)
 s.bgcolor("black")
@@ -58,7 +68,7 @@ s.onkeypress(izquierda, "Left")
 while True :
     s.update()
     
-    if serpiente.xcor()>300 or serpiente.xcor()<-300 or serpiente.ycor()>300 or serpiente.ycor()<-300:
+    if serpiente.xcor()>300 or serpiente.xcor()<-300 or serpiente.ycor()>300 or serpiente.ycor()<-300 :
         time.sleep(2)
         for i in cuerpo :
             i.clear()
@@ -66,6 +76,9 @@ while True :
         serpiente.home()
         serpiente.direction = "stop"
         cuerpo.clear()
+        marcador = 0
+        texto.clear()
+        texto.write("marcador: {}\tMarcador mas alto: {}".format(marcador, marcador_alto), align="center", font=("verdana", 14, "normal"))
     
     if serpiente.distance(comida) < 20 :
         x = random.randint(-250, 250)
@@ -79,6 +92,11 @@ while True :
         nuevo_cuerpo.goto(0, 0)
         nuevo_cuerpo.speed(0)
         cuerpo.append(nuevo_cuerpo)
+        marcador += 10
+        if marcador > marcador_alto :
+            marcador_alto = marcador
+            texto.clear()
+            texto.write("marcador: {}\tMarcador mas alto: {}".format(marcador, marcador_alto), align="center", font=("verdana", 14, "normal"))
     
     total = len(cuerpo)    
     for i in range(total-1, 0, -1) :
@@ -101,6 +119,7 @@ while True :
             serpiente.home()
             cuerpo.clear()
             serpiente.direction = "stop"
+            texto.clear()
                 
     time.sleep(0.1)
 
